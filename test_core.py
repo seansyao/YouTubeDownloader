@@ -16,32 +16,32 @@ from src.core.errors import (
 
 def test_validators():
     """Test URL validation and filename sanitization."""
-    print("Testing URL Validators...")
+    print("\nTesting URL Validators...")
     
     # Valid URLs
     assert is_valid_youtube_url("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     assert is_valid_youtube_url("https://youtube.com/watch?v=dQw4w9WgXcQ")
     assert is_valid_youtube_url("https://youtu.be/dQw4w9WgXcQ")
     assert is_valid_youtube_url("https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PLxxx")  # with playlist param
-    print("  ✓ Valid URLs pass")
+    print("  [OK] Valid URLs pass")
     
     # Invalid URLs
     assert not is_valid_youtube_url("https://example.com")
     assert not is_valid_youtube_url("not-a-url")
     assert not is_valid_youtube_url("")
     assert not is_valid_youtube_url("youtube.com/watch")  # missing video ID
-    print("  ✓ Invalid URLs rejected")
+    print("  [OK] Invalid URLs rejected")
     
     # Filename sanitization
     assert sanitize_filename("My: Video <2024>") == "My_ Video _2024_"
     assert sanitize_filename("Bad/Path\\File|Name") == "Bad_Path_File_Name"
     assert sanitize_filename("normal_filename.txt") == "normal_filename.txt"
-    print("  ✓ Filenames sanitized correctly")
+    print("  [OK] Filenames sanitized correctly")
     
     # Disk space check
     result = check_disk_space(Path.home(), 100)
     assert isinstance(result, bool)
-    print("  ✓ Disk space check works")
+    print("  [OK] Disk space check works")
 
 
 def test_error_hierarchy():
@@ -57,7 +57,7 @@ def test_error_hierarchy():
     for err in errors:
         assert isinstance(err, Exception)
     
-    print("  ✓ All error classes properly defined")
+    print("  [OK] All error classes properly defined")
 
 
 def test_imports():
@@ -69,7 +69,7 @@ def test_imports():
         from src.core.downloader import DownloadManager
         from src.core.postprocess_base import PostProcessorBase, NoOpPostProcessor
         from src.gui.main_window import MainWindow
-        print("  ✓ All modules import successfully")
+        print("  [OK] All modules import successfully")
     except ImportError as e:
         print(f"  ✗ Import failed: {e}")
         raise
@@ -103,7 +103,7 @@ def test_downloader_quality_extraction():
     assert any("720p" in q for q in qualities.keys())
     assert any("480p" in q for q in qualities.keys())
     
-    print("  ✓ Qualities extracted correctly (all using 'best' format)")
+    print("  [OK] Qualities extracted correctly (all using 'best' format)")
     print("    Available qualities:", list(qualities.keys()))
 
 
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     test_downloader_quality_extraction()
     
     print("\n" + "=" * 50)
-    print("All tests passed! ✓")
+    print("All tests passed! [OK]")
     print("=" * 50)
     print("\nNext steps:")
     print("  1. Paste YouTube URL and click 'Load Video Info & Qualities'")
