@@ -10,7 +10,9 @@
 [Setup]
 AppName=YouTube MP4 Downloader
 AppVersion=1.0.0
-AppPublisher=Your Name/Organization
+; CUSTOMIZE THESE - Replace with your actual name and company
+AppAuthor=Sean Yao
+AppPublisher=Factor Y Inc.
 AppPublisherURL=https://github.com/yourusername/YouTubeDownloader
 AppSupportURL=https://github.com/yourusername/YouTubeDownloader/issues
 AppUpdatesURL=https://github.com/yourusername/YouTubeDownloader/releases
