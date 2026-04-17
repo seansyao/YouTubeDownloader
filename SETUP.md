@@ -9,7 +9,8 @@ The installer package includes:
 - ✓ FFmpeg with ffprobe
 - ✓ Automatic PATH configuration
 - ✓ Desktop shortcuts
-- ✓ Documentation
+- ✓ Documentation files (README.md, MANUAL.md, plan.md)
+- ✓ Built-in Help menu with documentation viewer
 - ✓ Uninstall support with cleanup
 
 ## Prerequisites
@@ -24,53 +25,6 @@ pip install pyinstaller
 ### 2. Inno Setup (creates Windows installer)
 - Download from: http://www.jrsoftware.org/isdl.php
 - Install to default location: `C:\Program Files (x86)\Inno Setup 6\`
-
-## Customization - Add Your Name & Company
-
-Before building, customize the installer with your information:
-
-### Edit build_setup.py
-
-Open `build_setup.py` and update at the top:
-
-```python
-# CUSTOMIZE THESE SETTINGS
-AUTHOR_NAME = "Your Name"           # Your full name
-COMPANY_NAME = "Your Company Name"  # Your company or organization
-VERSION = "1.0.0"                   # App version
-```
-
-Example:
-```python
-AUTHOR_NAME = "John Smith"
-COMPANY_NAME = "Smith Software LLC"
-VERSION = "1.0.0"
-```
-
-### Edit build_installer.iss
-
-Open `build_installer.iss` and update these lines (near the top):
-
-```ini
-[Setup]
-...
-AppAuthor=Your Name                    # Your name - shown in Windows Add/Remove Programs
-AppPublisher=Your Company Name         # Your company - shown in installer
-AppPublisherURL=https://...            # Your website or GitHub profile
-```
-
-Example:
-```ini
-AppAuthor=John Smith
-AppPublisher=Smith Software LLC
-AppPublisherURL=https://github.com/johnsmith
-```
-
-These values appear in:
-- Windows Add/Remove Programs
-- Installer wizard
-- System properties
-- About information
 
 ## Step-by-Step Build Process
 

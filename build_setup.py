@@ -8,8 +8,6 @@ import sys
 from pathlib import Path
 
 # CUSTOMIZE THESE SETTINGS
-AUTHOR_NAME = "Sean Yao"
-COMPANY_NAME = "Factor Y Inc."
 VERSION = "1.0.0"
 
 def check_dependencies():
@@ -25,7 +23,6 @@ def build_executable():
     """Build executable using PyInstaller."""
     print("\n" + "="*60)
     print(f"Building executable with PyInstaller v{VERSION}...")
-    print(f"Author: {AUTHOR_NAME} | Company: {COMPANY_NAME}")
     print("="*60)
     
     cmd = [

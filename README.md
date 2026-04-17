@@ -77,9 +77,21 @@ A GUI window will appear. Paste a YouTube URL and click "Download" to start.
 
 1. **Open the Application**: Run `python main.py`
 2. **Paste URL**: Copy a YouTube URL and paste it into the text field
-3. **Choose Folder**: Click "Browse" to select where to save the video
-4. **Download**: Click the "Download" button and wait for completion
-5. **Success**: Your MP4 file will be saved to the selected folder
+3. **Load Video Info**: Click "Load Video Info & Qualities" to verify and fetch metadata
+4. **Choose Quality**: Select from available resolutions (or use "Best (Auto)")
+5. **Choose Folder**: Click "Browse" to select where to save the video
+6. **Download**: Click the "Download" button and wait for completion
+7. **Success**: Your MP4 file will be saved to the selected folder
+
+### Built-in Help Menu
+
+The application includes a **Help** menu with:
+- **Getting Started** - Installation and project overview (README.md)
+- **User Manual** - Complete usage guide and troubleshooting (MANUAL.md)
+- **GitHub Repository** - Visit the project on GitHub (opens in browser)
+- **About** - Version, features, and support information
+
+Access Help anytime from the menu bar while using the application.
 
 ### Supported URL Formats:
 - `https://www.youtube.com/watch?v=VIDEO_ID`

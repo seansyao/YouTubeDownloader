@@ -10,12 +10,6 @@
 [Setup]
 AppName=YouTube MP4 Downloader
 AppVersion=1.0.0
-; CUSTOMIZE THESE - Replace with your actual name and company
-AppAuthor=Sean Yao
-AppPublisher=Factor Y Inc.
-AppPublisherURL=https://github.com/yourusername/YouTubeDownloader
-AppSupportURL=https://github.com/yourusername/YouTubeDownloader/issues
-AppUpdatesURL=https://github.com/yourusername/YouTubeDownloader/releases
 DefaultDirName={autopf}\YouTubeDownloader
 DefaultGroupName=YouTube MP4 Downloader
 OutputDir=output
@@ -45,6 +39,7 @@ Source: "bin\ffprobe.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
 
 ; Documentation
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
+Source: "MANUAL.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "plan.md"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]

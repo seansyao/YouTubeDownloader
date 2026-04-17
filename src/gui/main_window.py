@@ -1,6 +1,7 @@
 """Main GUI window for YouTube downloader."""
 
 import threading
+import webbrowser
 from pathlib import Path
 from tkinter import filedialog, messagebox, scrolledtext
 import customtkinter as ctk
@@ -39,6 +40,7 @@ COLOR_ERROR = "red"
 COLOR_INFO = "white"
 
 # Messages and Help Text
+GITHUB_REPO = "https://github.com/seansyao/YouTubeDownloader"
 MSG_LEGAL_DISCLAIMER = (
     "⚠️ Only download content you own or have permission to download.\n"
     "Respect copyright laws and YouTube's Terms of Service."
@@ -91,6 +93,9 @@ class MainWindow(ctk.CTk):
 
     def _build_ui(self):
         """Construct the complete UI layout."""
+        # Create menu bar
+        self._build_menu_bar()
+        
         # Main container
         main_frame = ctk.CTkFrame(self)
         main_frame.pack(fill="both", expand=True, padx=DEFAULT_PADDING, pady=DEFAULT_PADDING)
@@ -104,6 +109,23 @@ class MainWindow(ctk.CTk):
         self._build_progress_section(main_frame)
         self._build_log_section(main_frame)
         self._build_footer_section(main_frame)
+
+    def _build_menu_bar(self):
+        """Build menu bar with Help options."""
+        import tkinter as tk
+        
+        menubar = tk.Menu(self)
+        self.config(menu=menubar)
+        
+        # Help menu
+        help_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Help", menu=help_menu)
+        help_menu.add_command(label="Getting Started", command=self._show_getting_started)
+        help_menu.add_command(label="User Manual", command=self._show_user_manual)
+        help_menu.add_separator()
+        help_menu.add_command(label="GitHub Repository", command=self._open_github)
+        help_menu.add_separator()
+        help_menu.add_command(label="About", command=self._show_about)
 
     def _build_title_section(self, parent: ctk.CTkFrame):
         """Build title and disclaimer section."""
@@ -635,6 +657,147 @@ class MainWindow(ctk.CTk):
             return "?"
         mb_per_sec = speed / (1024 ** 2)
         return f"{mb_per_sec:.1f}MB/s"
+
+    def _show_getting_started(self):
+        """Show Getting Started help dialog."""
+        self._show_help_dialog(
+            "Getting Started",
+            "README.md",
+            "Installation & Project Information"
+        )
+
+    def _show_user_manual(self):
+        """Show User Manual help dialog."""
+        self._show_help_dialog(
+            "User Manual",
+            "MANUAL.md",
+            "How to Use the Application"
+        )
+
+    def _show_help_dialog(self, title: str, filename: str, description: str):
+        """
+        Show help dialog with file content.
+        
+        Args:
+            title: Dialog title.
+            filename: Name of markdown file to load.
+            description: File description.
+        """
+        import tkinter as tk
+        
+        # Try to load the markdown file
+        filepath = Path(__file__).parent.parent.parent / filename
+        
+        if not filepath.exists():
+            messagebox.showwarning(
+                title,
+                f"Could not find {filename}\n\nPlease check that documentation files are installed."
+            )
+            return
+        
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except Exception as e:
+            messagebox.showerror(title, f"Error reading {filename}:\n{e}")
+            return
+        
+        # Create dialog window
+        dialog = tk.Toplevel(self)
+        dialog.title(title)
+        dialog.geometry("800x600")
+        
+        # Header frame
+        header_frame = tk.Frame(dialog)
+        header_frame.pack(fill="x", padx=10, pady=10)
+        
+        header_label = tk.Label(
+            header_frame,
+            text=description,
+            font=("Arial", 12, "bold")
+        )
+        header_label.pack(anchor="w")
+        
+        # Text display
+        text_frame = tk.Frame(dialog)
+        text_frame.pack(fill="both", expand=True, padx=10, pady=(0, 10))
+        
+        scrollbar = tk.Scrollbar(text_frame)
+        scrollbar.pack(side="right", fill="y")
+        
+        text_widget = tk.Text(
+            text_frame,
+            wrap="word",
+            yscrollcommand=scrollbar.set,
+            font=("Courier", 9),
+            bg="white",
+            fg="black"
+        )
+        text_widget.pack(side="left", fill="both", expand=True)
+        scrollbar.config(command=text_widget.yview)
+        
+        # Insert content
+        text_widget.insert("1.0", content)
+        text_widget.configure(state="disabled")
+        
+        # Button frame
+        button_frame = tk.Frame(dialog)
+        button_frame.pack(fill="x", padx=10, pady=10)
+        
+        close_btn = tk.Button(
+            button_frame,
+            text="Close",
+            command=dialog.destroy,
+            width=15
+        )
+        close_btn.pack(side="right")
+
+    def _open_github(self):
+        """Open GitHub repository in default browser."""
+        try:
+            webbrowser.open(GITHUB_REPO)
+        except Exception as e:
+            messagebox.showinfo(
+                "GitHub Repository",
+                f"Visit the GitHub repository:\n\n{GITHUB_REPO}\n\n"
+                f"(Could not open browser: {e})"
+            )
+
+    def _show_about(self):
+        """Show About dialog."""
+        about_text = f"""{WINDOW_TITLE}
+Version 1.0.0
+
+Download YouTube videos as MP4 files.
+
+Features:
+• Download videos in multiple quality options
+• Automatic FFmpeg integration
+• Fast and reliable downloading
+• User-friendly interface
+• Built-in Help menu and documentation
+
+Technologies:
+• Python 3.x
+• CustomTkinter (Modern GUI)
+• yt-dlp (YouTube extraction)
+• FFmpeg (Media processing)
+
+Support & More:
+• Help → Getting Started
+• Help → User Manual
+• Help → GitHub Repository
+• {GITHUB_REPO}
+
+Legal:
+Only download content you own or have 
+permission to download. Respect copyright 
+laws and YouTube Terms of Service.
+
+Version: 1.0.0
+License: MIT
+"""
+        messagebox.showinfo("About", about_text)
 
 
 def main():
