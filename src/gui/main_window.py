@@ -1,5 +1,6 @@
 """Main GUI window for YouTube downloader."""
 
+import sys
 import threading
 import webbrowser
 from pathlib import Path
@@ -685,13 +686,32 @@ class MainWindow(ctk.CTk):
         """
         import tkinter as tk
         
-        # Try to load the markdown file
-        filepath = Path(__file__).parent.parent.parent / filename
+        # Try multiple locations to find the markdown file
+        # Priority order:
+        # 1. Project root (development mode)
+        # 2. Executable directory (installed mode)
+        # 3. App data directory (fallback)
         
-        if not filepath.exists():
+        possible_paths = [
+            Path(__file__).parent.parent.parent / filename,  # Project root
+            Path(sys.executable).parent / filename,  # Executable directory (installed)
+            Path(sys.argv[0]).parent / filename,  # Script/exe directory
+        ]
+        
+        filepath = None
+        for path in possible_paths:
+            if path.exists():
+                filepath = path
+                break
+        
+        if filepath is None:
             messagebox.showwarning(
                 title,
-                f"Could not find {filename}\n\nPlease check that documentation files are installed."
+                f"Could not find {filename}\n\n"
+                f"Checked locations:\n"
+                f"• Project root\n"
+                f"• Installation directory\n\n"
+                f"Please ensure documentation files are installed."
             )
             return
         
